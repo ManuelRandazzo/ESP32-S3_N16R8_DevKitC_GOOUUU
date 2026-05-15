@@ -1,0 +1,5 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "ESP32-S3-N16R8_GOOUUU_TECH") (type "KiCad") (uri "${KIPRJMOD}/../KiCAD_Lib_ESP32-S3/Footprint/ESP32-S3-N16R8_GOOUUU.pretty") (options "") (descr ""))
+	(lib (name "FootprintsToBuildTheBoard") (type "KiCad") (uri "${KIPRJMOD}/FootprintsToBuildTheBoard.pretty") (options "") (descr ""))
+)

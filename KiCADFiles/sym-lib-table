@@ -1,0 +1,4 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "ComponentsLibraryESP32-S3") (type "KiCad") (uri "${KIPRJMOD}/../KiCAD_Lib_ESP32-S3/SymbolSchematic/ComponentsLibraryESP32-S3.kicad_sym") (options "") (descr ""))
+)
