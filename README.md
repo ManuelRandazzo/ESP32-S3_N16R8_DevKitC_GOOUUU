@@ -171,7 +171,58 @@ Contributions improving the routing are welcome.
 
 ---
 
-## Firmware Tips (Arduino)
+## PlatformIO and Pioarduino Board Configuration
+### PlatformIO Board Configuration
+Original Author of this configuration : https://github.com/sivar2311/ESP32-PlatformIO-Flash-and-PSRAM-configurations.
+
+CUSTOM Config -> **flash_mode** from "opi" to "qio" to be coerent with the pioarduino configuration
+```ini
+; Flash: 16MB OT, PSRAM: 8MB OT
+[env:esp32-s3-devkitc-1]
+platform = espressif32
+board = esp32-s3-devkitc-1
+framework = arduino
+
+board_build.arduino.memory_type = opi_opi
+board_build.flash_mode = qio ; CUSTOM -> before was "opi"
+board_build.psram_type = opi
+board_upload.flash_size = 16MB
+board_upload.maximum_size = 16777216
+board_build.partitions = default_16MB.csv
+board_build.extra_flags = 
+  -DBOARD_HAS_PSRAM
+  -mfix-esp32-psram-cache-issue
+```
+
+---
+
+### Pioarduino Board Configuration (PlatformIO Fork)
+Original Author of this configuration : https://github.com/sivar2311/platformio_boards/blob/main/esp32-s3-devkitc1-n16r8.json
+```ini
+; Flash: 16MB OT, PSRAM: 8MB OT
+[env:esp32-s3-devkitc1-n16r8]
+platform = https://github.com/pioarduino/platform-espressif32/releases/download/stable/platform-espressif32.zip
+framework = arduino
+board = esp32-s3-devkitc1-n16r8
+board_build.extra_flags = 
+  -mfix-esp32-psram-cache-issue
+```
+
+---
+
+### Add Builtin Debugger for PlatformIO and Pioarduino Fork (via USB OTG)
+Under the previously configured "board_build.extra_flags" add :
+```ini
+; Debugger setup link: https://community.platformio.org/t/how-to-use-jtag-built-in-debugger-of-the-esp32-s3-in-platformio/36042
+debug_tool = esp-builtin
+build_type = debug
+debug_load_mode = modified ; To recompile only the most recent changes (faster than recompile all files)
+;debug_init_break = thb setup ; OPTIONAL : Change it to start the debugger from the function that you prefer, default is function "main"
+```
+
+---
+
+## Arduino Board Configuration
 
 **Board selection**
 ```C
