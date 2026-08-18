@@ -225,7 +225,7 @@ debug_load_mode = modified ; To recompile only the most recent changes (faster t
 ### Add Firmware Flashing, Debugging and Logging PlatformIO and Pioarduino Fork
 The ESP32-S3 has a builtin **USB Serial/JTAG Controller ROM bootloader** over native USB (port labeled as OTG) which is used to do multiple tasks such as flashing the firmware, debugging, logging and other things using just one USB 2.0 port.
 
-**WARNING** : when using the USB CDC, the USB OTG will no longer be available.
+***WARNING*** : when using the USB CDC, the USB OTG will no longer be available.
 
 Under the previously configured "board_build.extra_flags" add :
 ```ini
