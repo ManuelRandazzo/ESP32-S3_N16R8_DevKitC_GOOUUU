@@ -70,7 +70,7 @@ Two variants of the 3D model are provided:
 </p>
 
 <p align="center">
-  <em>Left: board only — Right: board with socket headers allowing module removal</em>
+  <em><strong>Left: board only — Right: board with socket headers allowing module removal</em>
 </p>
 
 ---
@@ -83,7 +83,7 @@ Two variants of the 3D model are provided:
 </p>
 
 <p align="center">
-  <em>Left: top view of the board — Right: bottom view of the board</em>
+  <em><strong>Left: top view of the board — Right: bottom view of the board</em>
 </p>
 
 ---
@@ -107,7 +107,7 @@ These footprints are intended for reuse in custom PCB designs and mechanical int
 </p>
 
 <p align="center">
-  <em>TODO: add board components to the footprint</em>
+  <em><strong>TODO: add board components to the footprint</em>
 </p>
 
 ---
@@ -155,7 +155,7 @@ Avoid connecting external devices that force these pins HIGH or LOW during reset
 </p>
 
 <p align="center">
-  <em>Board pinout reference</em>
+  <em><strong>Board pinout reference</em>
 </p>
 
 ---
@@ -210,7 +210,7 @@ board_build.extra_flags =
 
 ---
 
-### Add Builtin Debugger for PlatformIO and Pioarduino Fork (via USB OTG)
+### Add Builtin Debugger for PlatformIO and Pioarduino Fork via Native USB (OTG)
 Under the previously configured "board_build.extra_flags" add :
 ```ini
 ; Debugger setup link: https://community.platformio.org/t/how-to-use-jtag-built-in-debugger-of-the-esp32-s3-in-platformio/36042
@@ -219,6 +219,29 @@ build_type = debug
 debug_load_mode = modified ; To recompile only the most recent changes (faster than recompile all files)
 ;debug_init_break = thb setup ; OPTIONAL : Change it to start the debugger from the function that you prefer, default is function "main"
 ```
+
+---
+
+### Add Firmware Flashing, Debugging and Logging over Native USB (port labeled as OTG) PlatformIO and Pioarduino Fork (via Native USB)
+The ESP32-S3 has a builtin **USB Serial/JTAG Controller ROM bootloader** that is used to do multiple tasks such as flash the firmware, debugging, logging and other things using just one USB 2.0 port.
+**WARNING** : when using the USB CDC, the USB OTG will no longer be available.
+Under the previously configured "board_build.extra_flags" add :
+```ini
+; Debugger setup link: https://community.platformio.org/t/how-to-use-jtag-built-in-debugger-of-the-esp32-s3-in-platformio/36042
+debug_tool = esp-builtin
+build_type = debug
+debug_load_mode = modified ; To recompile only the most recent changes (faster than recompile all files especially the external libraries)
+;debug_init_break = thb setup ; OPTIONAL : Change it to start the debugger from the function that you prefer, default is function "main"
+
+; Serial port redirected to USB CDC instead of UART
+build_flags =
+    -D ARDUINO_USB_MODE=1 ; Select the USB CDC (Communication Device Class) instead of UART ---> WARNING : USB OTG is no longer available
+    -D ARDUINO_USB_CDC_ON_BOOT=1 ; Automatically opens the serial port after the firmware upload
+```
+
+<p>
+  <em><strong>Note : Debugging sessions can coexist with logging via USB CDC</em>
+</p>
 
 ---
 
